@@ -1,0 +1,15 @@
+Package: winter
+Title: Cover Time Series with Carry Over
+Version: 0.0.0.9001
+Authors@R: 
+    person(given = "Keach",
+           family = "Murakami",
+           role = c("aut", "cre"),
+           email = "keach.murakami@gmail.com",
+           comment = c(ORCID = "0000-0001-8150-9535"))
+Description: A bundle of functions to deal with time series data with carry over to the following year.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1

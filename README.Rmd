@@ -1,0 +1,92 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# winter
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+冬の経時データをよしなに扱うパッケージ
+
+## Installation
+
+You can install the released version of winter from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("winter")
+```
+
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("KeachMurakami/winter")
+```
+## Example
+
+```{r}
+library(winter)
+
+
+# get snow data
+library(amgsds)
+
+data <-
+  bind_rows(
+    unfold(fetch_point(year = 1989, element = "SD",
+                       lat = 43, lon = 144, day_of_year = 270:365)),
+    unfold(fetch_point(year = 1990, element = "SD",
+                       lat = 43, lon = 144, day_of_year = 1:120))
+    )
+```
+
+# `winter_year`/`winter_doy`
+
+寒候年の年度またぎに関する日付データを扱う。
+
+
+- `winter_year`
+    - 10-翌3月をひとつのシーズンとしてまとめる
+    - `group_by`や`facet_wrap`で出番が多い
+    
+    
+- `winter_doy`
+    - day of year を1月1日にリセットせずに連続
+
+```{r}
+data %>%
+  dplyr::mutate(season = winter_year(time),
+                doy = winter_doy(time)) %>%
+  slice(c(1:8, 183:190)) %>%
+  add_row(.before = 9)
+```
+
+
+# `neyuki`
+
+根雪期間を判定する。
+デフォルトでは気象庁準拠の方式。
+`method = ""`として`nmin`を変更すれば任意の連続日数を根雪とみなすことができる。
+
+- 連続30日以上の積雪を長期積雪 (根雪) と判定
+    - 連続10日以上の積雪期間に前後を挟まれた5日以内の無積雪期間は連続積雪期間に含まれる
+
+```{r}
+data %>%
+  mutate(neyuki = neyuki(value)) %>%
+  ggplot(aes(time, value)) +
+  geom_area(aes(y = as.numeric(neyuki)*Inf), fill = "steelblue") +
+  geom_area()
+```

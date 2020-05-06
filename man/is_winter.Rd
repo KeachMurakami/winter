@@ -4,10 +4,14 @@
 \alias{is_winter}
 \title{Is this date winter?}
 \usage{
-is_winter(x)
+is_winter(x, start = 10, end = 3)
 }
 \arguments{
 \item{x}{a date-time object}
+
+\item{start}{month of winter start}
+
+\item{end}{month of winter end}
 }
 \value{
 logical

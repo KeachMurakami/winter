@@ -4,10 +4,12 @@
 \alias{winter_doy}
 \title{Get continuous day-of-year index}
 \usage{
-winter_doy(x)
+winter_doy(x, end = 3)
 }
 \arguments{
 \item{x}{a date-time object}
+
+\item{end}{month of winter end}
 }
 \value{
 doy

@@ -4,10 +4,14 @@
 \alias{winter_year}
 \title{Get winter years component of a date-time}
 \usage{
-winter_year(x)
+winter_year(x, start = 10, end = 3)
 }
 \arguments{
 \item{x}{a date-time object}
+
+\item{start}{month of winter start}
+
+\item{end}{month of winter end}
 }
 \value{
 winter season (chr)
